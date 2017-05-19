@@ -1,0 +1,73 @@
+<!doctype html>
+<html ng-app="population">
+  <head>
+    <meta charset="utf-8">
+    <title>Population simulator</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="../bower_components/animate.css/animate.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css({.tmp/serve,src}) styles/app.css -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="app/index.css">
+    <!-- endinject -->
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="container" ng-controller="MainController as main">
+      <button class="form-control" ng-click="toggleTimeline()">{{isTimelineRunning() ? "Stop": "Start"}} timeline</button>
+      <h3>People list:</h3>
+      <ul>
+        <li ng-if="person.alive" ng-repeat="person in people track by $index" ng-click="checkAncestors(); showAncestors(person);">
+          <span><strong>{{person.name}}</strong>: age: {{person.age}}, maxAge: {{person.determineMaxAge()}}</span>
+          <span ng-if="person.gender === 'f'" class="label label-danger">Female</span>
+          <span ng-if="(person.age > 15 && person.age < 25)" class="label label-success">Can cross</span>
+          <span ng-if="person.features.inteligence > 8" class="label label-info">Inteligent</span>
+          <span ng-if="person.features.inteligence < 2" class="label label-info">Stupid</span>
+        </li>
+      </ul>
+      <span class="badge">{{people.length}} ludzi</span>
+    </div>
+
+    <!-- build:js(src) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/malarkey/dist/malarkey.min.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <script src="../bower_components/moment/moment.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+    <!-- inject:js -->
+    <script src="app/index.module.js"></script>
+    <script src="app/people/timeline.js"></script>
+    <script src="app/people/population.js"></script>
+    <script src="app/people/names.provider.js"></script>
+    <script src="app/people/main.controller.js"></script>
+    <script src="app/people/human.model.js"></script>
+    <script src="app/helpers/event.emitter.js"></script>
+    <script src="app/index.run.js"></script>
+    <script src="app/index.constants.js"></script>
+    <script src="app/index.config.js"></script>
+    <!-- endinject -->
+
+    <!-- inject:partials -->
+    <!-- angular templates will be automatically converted in js and inserted here -->
+    <!-- endinject -->
+    <!-- endbuild -->
+
+  </body>
+</html>
